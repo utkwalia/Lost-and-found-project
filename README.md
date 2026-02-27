@@ -1,16 +1,94 @@
-# React + Vite
+# Dorm-Dash
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Dorm-Dash is a campus task-marketplace app where students can post quick requests (snacks, pickups, print runs, etc.) and nearby student runners fulfill them.
 
-Currently, two official plugins are available:
+This repository contains:
+- A **React + Vite + Tailwind** application (primary app)
+- A legacy single-file prototype at `main.html` (kept for reference)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Tech Stack
 
-## React Compiler
+- React 19
+- Vite 7
+- Tailwind CSS 4 (via `@tailwindcss/vite`)
+- React Router
+- Lucide React (icons)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Features
 
-## Expanding the ESLint configuration
+- Multi-page app with routed views:
+  - Home
+  - Features
+  - How it works
+  - Safety
+  - Runner Dashboard
+  - Requester Dashboard
+  - Login
+  - Signup
+- Global navigation and theme toggle
+- Request posting flow in Requester Dashboard
+- Shared request data rendered in Runner Dashboard
+- Persistent Support chatbot UI with quick actions
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Getting Started
+
+### 1. Install dependencies
+
+```bash
+npm install
+```
+
+### 2. Run in development
+
+```bash
+npm run dev
+```
+
+Open the local URL printed by Vite (usually `http://localhost:5173`).
+
+### 3. Build for production
+
+```bash
+npm run build
+```
+
+### 4. Preview production build
+
+```bash
+npm run preview
+```
+
+## Scripts
+
+- `npm run dev` - Start Vite dev server
+- `npm run build` - Create production build
+- `npm run preview` - Preview production build
+- `npm run lint` - Run ESLint
+
+## Project Structure
+
+```text
+src/
+  components/
+    SupportChatbot.jsx
+  layout/
+    AppLayout.jsx
+  pages/
+    Home.jsx
+    Features.jsx
+    HowItWorks.jsx
+    Safety.jsx
+    RunnerDashboard.jsx
+    RequesterDashboard.jsx
+    Login.jsx
+    Signup.jsx
+  App.jsx
+  main.jsx
+  index.css
+main.html   # legacy prototype
+```
+
+## Notes
+
+- Theme state and demo request data are currently persisted in `localStorage`.
+- `main.html` still contains the older prototype implementation and can be removed once no longer needed.
