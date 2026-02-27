@@ -185,12 +185,9 @@
         body.dark-mode .logo,
         body.dark-mode h1,
         body.dark-mode h2,
-        body.dark-mode h3,
-        body.dark-mode label,
-        body.dark-mode p,
-        body.dark-mode li,
         body.dark-mode .section-subhead,
-        body.dark-mode .stat-label {
+        body.dark-mode .stat-label,
+        body.dark-mode .hero-desc {
             color: #dbe7f5;
         }
 
@@ -241,6 +238,22 @@
             background: #0f1621;
             color: #e7edf5;
             border-color: #344963;
+        }
+
+        body.dark-mode .sparkline-head {
+            color: #9bb2cc;
+        }
+
+        body.dark-mode .sparkline-fill {
+            fill: rgba(197, 220, 248, 0.14);
+        }
+
+        body.dark-mode .sparkline-line {
+            stroke: #c5dcf8;
+        }
+
+        body.dark-mode .sparkline-point {
+            stroke: #172233;
         }
 
         body.dark-mode .btn-outline {
@@ -556,6 +569,43 @@
             color: #1e3c5c;
         }
 
+        .earnings-sparkline {
+            margin-top: 0.8rem;
+        }
+
+        .sparkline-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.4rem;
+            font-size: 0.75rem;
+            color: #5f748b;
+        }
+
+        .sparkline-svg {
+            width: 100%;
+            height: 56px;
+            display: block;
+        }
+
+        .sparkline-fill {
+            fill: rgba(30, 60, 92, 0.12);
+        }
+
+        .sparkline-line {
+            fill: none;
+            stroke: #1e3c5c;
+            stroke-width: 2.4;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .sparkline-point {
+            fill: #f0b34b;
+            stroke: #ffffff;
+            stroke-width: 1.5;
+        }
+
         .task-list {
             background: white;
             border-radius: 28px;
@@ -820,6 +870,31 @@
             border-color: #1e3c5c;
         }
 
+        .quick-photo-preview {
+            margin-top: 0.6rem;
+            width: 100%;
+            max-height: 160px;
+            object-fit: cover;
+            border-radius: 14px;
+            border: 1px solid #d7e1ec;
+            display: none;
+        }
+
+        .task-item-media {
+            width: 52px;
+            height: 52px;
+            border-radius: 10px;
+            object-fit: cover;
+            margin-right: 0.8rem;
+            border: 1px solid #dbe4ee;
+            flex-shrink: 0;
+        }
+
+        .task-item-main {
+            display: flex;
+            align-items: center;
+        }
+
         .safety-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -884,6 +959,103 @@
 
         body.dark-mode .safety-card li {
             color: #dbe7f5;
+        }
+
+        .panel-card {
+            background: white;
+            border-radius: 24px;
+            padding: 1.5rem;
+        }
+
+        .route-map {
+            background: #eef3f8;
+            border-radius: 20px;
+            padding: 1rem;
+            height: 150px;
+            position: relative;
+        }
+
+        .route-chip {
+            display: flex;
+            gap: 8px;
+            position: absolute;
+            bottom: 16px;
+            left: 16px;
+            background: white;
+            padding: 8px 16px;
+            border-radius: 40px;
+        }
+
+        .tip-panel {
+            background: #e6f0f9;
+            border-radius: 24px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .tip-panel-subtext {
+            color: #2d3a4a;
+            font-size: 0.9rem;
+        }
+
+        .tip-panel .tip-option {
+            background: #ffffff;
+            color: #1e3c5c;
+            padding: 0.5rem 1rem;
+            border-radius: 40px;
+            min-width: 74px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .tip-panel .tip-option.is-selected {
+            background: #1e3c5c;
+            color: #ffffff;
+        }
+
+        body.dark-mode .panel-card {
+            background: #172233;
+            border: 1px solid #2a3b53;
+            color: #dbe7f5;
+        }
+
+        body.dark-mode .panel-card h3,
+        body.dark-mode .panel-card h4,
+        body.dark-mode .panel-card p,
+        body.dark-mode .panel-card span,
+        body.dark-mode .panel-card li,
+        body.dark-mode .panel-card label {
+            color: #dbe7f5 !important;
+        }
+
+        body.dark-mode .route-map {
+            background: #24364d;
+        }
+
+        body.dark-mode .route-chip {
+            background: #172233;
+            border: 1px solid #2a3b53;
+            color: #dbe7f5;
+        }
+
+        body.dark-mode .tip-panel {
+            background: #24364d;
+            border: 1px solid #2a3b53;
+        }
+
+        body.dark-mode .tip-panel h4,
+        body.dark-mode .tip-panel .tip-panel-subtext {
+            color: #dbe7f5 !important;
+        }
+
+        body.dark-mode .tip-panel .tip-option {
+            background: #f2f6fb;
+            color: #1e3c5c;
+        }
+
+        body.dark-mode .tip-panel .tip-option.is-selected {
+            background: #1e3c5c;
+            color: #ffffff;
         }
 
         .status-message {
@@ -1106,6 +1278,17 @@
                     <h3>Today's earnings</h3>
                     <div class="value">$48.50</div>
                     <div style="color: #22a65e; font-size: 0.9rem;">↑ 12% from yesterday</div>
+                    <div class="earnings-sparkline">
+                        <div class="sparkline-head">
+                            <span>Last 7 days</span>
+                            <span id="earningsSparklinePeak">$0</span>
+                        </div>
+                        <svg class="sparkline-svg" viewBox="0 0 240 56" aria-label="Weekly earnings trend">
+                            <polygon id="earningsSparklineFill" class="sparkline-fill" points=""></polygon>
+                            <polyline id="earningsSparklineLine" class="sparkline-line" points=""></polyline>
+                            <circle id="earningsSparklinePoint" class="sparkline-point" cx="0" cy="0" r="4"></circle>
+                        </svg>
+                    </div>
                 </div>
                 <div class="stat-card">
                     <h3>Tasks completed</h3>
@@ -1174,12 +1357,10 @@
                         </div>
                     </div>
 
-                    <div style="background: white; border-radius: 28px; padding: 1.5rem;">
+                    <div class="panel-card" style="border-radius: 28px;">
                         <h3 style="margin-bottom: 1rem;">Today's route</h3>
-                        <div
-                            style="background: #eef3f8; border-radius: 20px; padding: 1rem; height: 150px; position: relative;">
-                            <div
-                                style="display: flex; gap: 8px; position: absolute; bottom: 16px; left: 16px; background: white; padding: 8px 16px; border-radius: 40px;">
+                        <div class="route-map">
+                            <div class="route-chip">
                                 <span>📍 Library →</span>
                                 <span>🏪 Tuck Shop →</span>
                                 <span>🏢 West Hall</span>
@@ -1215,7 +1396,7 @@
                         </div>
                     </div>
 
-                    <div style="background: white; border-radius: 24px; padding: 1.5rem; margin-top: 2rem;">
+                    <div class="panel-card" style="margin-top: 2rem;">
                         <h4>Recent reviews</h4>
                         <div style="margin-top: 1rem;">
                             <div style="margin-bottom: 1rem;">
@@ -1344,7 +1525,7 @@
                 </div>
 
                 <div>
-                    <div style="background: white; border-radius: 24px; padding: 1.5rem;">
+                    <div class="panel-card quick-request-card">
                         <h4 style="margin-bottom: 1rem;">Quick request</h4>
                         <div class="input-group">
                             <label>What do you need?</label>
@@ -1358,23 +1539,23 @@
                             <label>Tip amount ($)</label>
                             <input id="quickTipInput" type="number" placeholder="8.00">
                         </div>
+                        <div class="input-group">
+                            <label>Item photo (optional)</label>
+                            <input id="quickPhotoInput" type="file" accept="image/*">
+                            <img id="quickPhotoPreview" class="quick-photo-preview" alt="Selected item preview">
+                        </div>
                         <button id="postRequestBtn" class="btn btn-primary" style="width: 100%;">Post request</button>
                         <div id="quickRequestStatus" class="status-message"></div>
                     </div>
 
-                    <div style="background: #e6f0f9; border-radius: 24px; padding: 1.5rem; margin-top: 2rem;">
+                    <div class="tip-panel">
                         <h4 style="margin-bottom: 0.5rem;">💰 Tip suggestions</h4>
-                        <p style="color: #2d3a4a; font-size: 0.9rem;">Higher tips get picked up faster</p>
+                        <p class="tip-panel-subtext">Higher tips get picked up faster</p>
                         <div style="display: flex; gap: 0.5rem; margin-top: 1rem;">
-                            <span class="tip-option" data-tip="5"
-                                style="background: white; padding: 0.5rem 1rem; border-radius: 40px;">$5</span>
-                            <span class="tip-option" data-tip="8"
-                                style="background: white; padding: 0.5rem 1rem; border-radius: 40px;">$8</span>
-                            <span
-                                class="tip-option" data-tip="10"
-                                style="background: #1e3c5c; color: white; padding: 0.5rem 1rem; border-radius: 40px;">$10</span>
-                            <span class="tip-option" data-tip="15"
-                                style="background: white; padding: 0.5rem 1rem; border-radius: 40px;">$15</span>
+                            <span class="tip-option" data-tip="5">$5</span>
+                            <span class="tip-option" data-tip="8">$8</span>
+                            <span class="tip-option is-selected" data-tip="10">$10</span>
+                            <span class="tip-option" data-tip="15">$15</span>
                         </div>
                     </div>
                 </div>
@@ -1628,6 +1809,50 @@
             saveStorage(STORAGE_KEYS.requests, requests);
         }
 
+        function readFileAsDataUrl(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = () => reject(new Error('Failed to read image file.'));
+                reader.readAsDataURL(file);
+            });
+        }
+
+        function renderEarningsSparkline(values) {
+            const line = document.getElementById('earningsSparklineLine');
+            const fill = document.getElementById('earningsSparklineFill');
+            const point = document.getElementById('earningsSparklinePoint');
+            const peak = document.getElementById('earningsSparklinePeak');
+
+            if (!line || !fill || !point || !peak || !Array.isArray(values) || values.length < 2) {
+                return;
+            }
+
+            const width = 240;
+            const height = 56;
+            const min = Math.min(...values);
+            const max = Math.max(...values);
+            const span = Math.max(1, max - min);
+
+            const points = values.map((value, index) => {
+                const x = (index / (values.length - 1)) * width;
+                const normalized = (value - min) / span;
+                const y = height - normalized * (height - 6) - 3;
+                return [x, y];
+            });
+
+            const linePoints = points.map(([x, y]) => `${x.toFixed(1)},${y.toFixed(1)}`).join(' ');
+            line.setAttribute('points', linePoints);
+
+            const fillPoints = `0,${height} ${linePoints} ${width},${height}`;
+            fill.setAttribute('points', fillPoints);
+
+            const [lastX, lastY] = points[points.length - 1];
+            point.setAttribute('cx', lastX.toFixed(1));
+            point.setAttribute('cy', lastY.toFixed(1));
+            peak.textContent = `$${Math.max(...values).toFixed(0)} peak`;
+        }
+
         function updateNavAuthState() {
             const session = getSession();
             const loginBtn = document.getElementById('navLoginBtn');
@@ -1659,10 +1884,14 @@
         function buildRequestTaskItem(request, statusLabel) {
             const wrapper = document.createElement('div');
             wrapper.className = 'task-item';
+            const media = request.photo ? `<img src="${request.photo}" alt="Requested item" class="task-item-media">` : '';
             wrapper.innerHTML = `
-                <div>
-                    <div style="font-weight: 600;">${request.item}</div>
-                    <div style="color: #5f748b;">${request.from} · just now</div>
+                <div class="task-item-main">
+                    ${media}
+                    <div>
+                        <div style="font-weight: 600;">${request.item}</div>
+                        <div style="color: #5f748b;">${request.from} · just now</div>
+                    </div>
                 </div>
                 <div>
                     <span style="color: #22a65e;">${statusLabel}</span>
@@ -1677,11 +1906,15 @@
             const distance = (Math.random() * 0.6 + 0.1).toFixed(1);
             const eta = Math.round(distance * 14 + 4);
             wrapper.className = 'task-item';
+            const media = request.photo ? `<img src="${request.photo}" alt="Requested item" class="task-item-media">` : '';
             wrapper.innerHTML = `
-                <div>
-                    <div style="font-weight: 600; margin-bottom: 4px;">${request.item}</div>
-                    <div style="color: #5f748b; font-size: 0.9rem;">${request.from} · New request</div>
-                    <div class="task-distance">${distance} mi · ${eta} min walk</div>
+                <div class="task-item-main">
+                    ${media}
+                    <div>
+                        <div style="font-weight: 600; margin-bottom: 4px;">${request.item}</div>
+                        <div style="color: #5f748b; font-size: 0.9rem;">${request.from} · New request</div>
+                        <div class="task-distance">${distance} mi · ${eta} min walk</div>
+                    </div>
                 </div>
                 <div>
                     <span class="task-tip">$${Number(request.tip).toFixed(0)} tip</span>
@@ -1713,9 +1946,16 @@
             const itemInput = document.getElementById('quickItemInput');
             const fromInput = document.getElementById('quickFromInput');
             const tipInput = document.getElementById('quickTipInput');
+            const photoInput = document.getElementById('quickPhotoInput');
+            const photoPreview = document.getElementById('quickPhotoPreview');
             if (itemInput) itemInput.value = '';
             if (fromInput) fromInput.value = '';
             if (tipInput) tipInput.value = '';
+            if (photoInput) photoInput.value = '';
+            if (photoPreview) {
+                photoPreview.style.display = 'none';
+                photoPreview.removeAttribute('src');
+            }
         }
 
         function initializeQuickRequest() {
@@ -1723,12 +1963,41 @@
             const itemInput = document.getElementById('quickItemInput');
             const fromInput = document.getElementById('quickFromInput');
             const tipInput = document.getElementById('quickTipInput');
+            const photoInput = document.getElementById('quickPhotoInput');
+            const photoPreview = document.getElementById('quickPhotoPreview');
 
             if (!postBtn || !itemInput || !fromInput || !tipInput) {
                 return;
             }
 
-            postBtn.addEventListener('click', () => {
+            if (photoInput && photoPreview) {
+                photoInput.addEventListener('change', async () => {
+                    const file = photoInput.files && photoInput.files[0];
+                    if (!file) {
+                        photoPreview.style.display = 'none';
+                        photoPreview.removeAttribute('src');
+                        return;
+                    }
+
+                    if (file.size > 2 * 1024 * 1024) {
+                        setStatusMessage('quickRequestStatus', 'Image must be 2MB or smaller.', false);
+                        photoInput.value = '';
+                        photoPreview.style.display = 'none';
+                        photoPreview.removeAttribute('src');
+                        return;
+                    }
+
+                    try {
+                        const imageData = await readFileAsDataUrl(file);
+                        photoPreview.src = imageData;
+                        photoPreview.style.display = 'block';
+                    } catch (error) {
+                        setStatusMessage('quickRequestStatus', 'Could not preview that image.', false);
+                    }
+                });
+            }
+
+            postBtn.addEventListener('click', async () => {
                 const item = itemInput.value.trim();
                 const from = fromInput.value.trim();
                 const tip = Number(tipInput.value);
@@ -1738,11 +2007,23 @@
                     return;
                 }
 
+                const file = photoInput && photoInput.files ? photoInput.files[0] : null;
+                let photoData = '';
+                if (file) {
+                    try {
+                        photoData = await readFileAsDataUrl(file);
+                    } catch (error) {
+                        setStatusMessage('quickRequestStatus', 'Image upload failed. Try another file.', false);
+                        return;
+                    }
+                }
+
                 const request = {
                     id: Date.now(),
                     item,
                     from,
                     tip,
+                    photo: photoData,
                     createdAt: new Date().toISOString()
                 };
 
@@ -1775,6 +2056,10 @@
                     if (tipInput && tip) {
                         tipInput.value = tip;
                     }
+                    document.querySelectorAll('.tip-option').forEach((option) => {
+                        option.classList.remove('is-selected');
+                    });
+                    chip.classList.add('is-selected');
                 });
             });
         }
@@ -1876,6 +2161,7 @@
         }
 
         renderRequests();
+        renderEarningsSparkline([32, 41, 37, 56, 48, 62, 54]);
         initializeQuickRequest();
         initializeSignup();
         initializeLogin();
