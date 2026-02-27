@@ -256,6 +256,22 @@
             stroke: #172233;
         }
 
+        body.dark-mode .stat-card h3 {
+            color: #dbe7f5;
+        }
+
+        body.dark-mode .stat-card .value {
+            color: #8fb8e6;
+        }
+
+        body.dark-mode .stat-card .subtle {
+            color: #b8d1ef !important;
+        }
+
+        body.dark-mode .stat-card .trend-positive {
+            color: #3ad181 !important;
+        }
+
         body.dark-mode .btn-outline {
             border-color: #9cb7d6;
             color: #dbe7f5;
@@ -569,6 +585,15 @@
             color: #1e3c5c;
         }
 
+        .stat-card .trend-positive {
+            color: #22a65e;
+            font-size: 0.9rem;
+        }
+
+        .stat-card .subtle {
+            color: #5f748b;
+        }
+
         .earnings-sparkline {
             margin-top: 0.8rem;
         }
@@ -870,6 +895,50 @@
             border-color: #1e3c5c;
         }
 
+        .auth-header h2 {
+            margin-bottom: 0.3rem;
+        }
+
+        .auth-header p,
+        .auth-footer {
+            color: #4d6278;
+        }
+
+        .auth-footer a {
+            color: #1e3c5c;
+            font-weight: 600;
+        }
+
+        .edu-badge {
+            margin-top: 0.75rem;
+            color: #4d6278;
+            font-weight: 500;
+        }
+
+        body.dark-mode .auth-card {
+            background: #172233;
+            border-color: #2a3b53;
+        }
+
+        body.dark-mode .auth-header h2,
+        body.dark-mode .auth-header p,
+        body.dark-mode .input-group label,
+        body.dark-mode .auth-footer,
+        body.dark-mode .auth-footer a,
+        body.dark-mode .edu-badge {
+            color: #dbe7f5;
+        }
+
+        body.dark-mode .input-group input {
+            background: #0f1621;
+            color: #e7edf5;
+            border-color: #344963;
+        }
+
+        body.dark-mode .input-group input::placeholder {
+            color: #9fb2c6;
+        }
+
         .quick-photo-preview {
             margin-top: 0.6rem;
             width: 100%;
@@ -1104,6 +1173,125 @@
             transform: translateY(0);
         }
 
+        .support-fab {
+            position: fixed;
+            right: 18px;
+            bottom: 18px;
+            z-index: 9999;
+            background: #1e3c5c;
+            color: #fff;
+            border: 2px solid #dbe7f5;
+            border-radius: 999px;
+            padding: 0.75rem 1rem;
+            font-weight: 700;
+            font-size: 0.95rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            cursor: pointer;
+            box-shadow: 0 14px 34px rgba(0, 0, 0, 0.32);
+        }
+
+        .support-pulse {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            width: 10px;
+            height: 10px;
+            border-radius: 999px;
+            background: #7dd3fc;
+            box-shadow: 0 0 0 0 rgba(125, 211, 252, 0.7);
+            animation: supportPing 1.6s infinite;
+        }
+
+        @keyframes supportPing {
+            0% {
+                box-shadow: 0 0 0 0 rgba(125, 211, 252, 0.7);
+            }
+
+            70% {
+                box-shadow: 0 0 0 9px rgba(125, 211, 252, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(125, 211, 252, 0);
+            }
+        }
+
+        .support-chat {
+            position: fixed;
+            right: 18px;
+            bottom: 78px;
+            z-index: 9999;
+            width: 350px;
+            height: 500px;
+            background: #fff;
+            border: 1px solid #dce6f0;
+            border-radius: 18px;
+            overflow: hidden;
+            display: none;
+            flex-direction: column;
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.26);
+        }
+
+        .support-chat.open {
+            display: flex;
+        }
+
+        .support-chat-header {
+            background: #1e3c5c;
+            color: #fff;
+            padding: 0.8rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 700;
+        }
+
+        .support-chat-body {
+            flex: 1;
+            padding: 0.8rem;
+            overflow-y: auto;
+            background: #f8fbff;
+        }
+
+        .support-actions {
+            display: flex;
+            gap: 0.4rem;
+            flex-wrap: wrap;
+            margin-bottom: 0.7rem;
+        }
+
+        .support-actions button {
+            border: 1px solid #c8d9ea;
+            background: #fff;
+            color: #1e3c5c;
+            border-radius: 999px;
+            padding: 0.32rem 0.55rem;
+            font-size: 0.75rem;
+            cursor: pointer;
+        }
+
+        .support-msg {
+            max-width: 85%;
+            padding: 0.45rem 0.6rem;
+            border-radius: 12px;
+            margin-bottom: 0.45rem;
+            font-size: 0.87rem;
+        }
+
+        .support-msg.bot {
+            background: #fff;
+            border: 1px solid #e3ebf3;
+            color: #1f2e40;
+        }
+
+        .support-msg.user {
+            background: #1e3c5c;
+            color: #fff;
+            margin-left: auto;
+        }
+
         /* Footer */
         .footer {
             background: white;
@@ -1277,7 +1465,7 @@
                 <div class="stat-card">
                     <h3>Today's earnings</h3>
                     <div class="value">$48.50</div>
-                    <div style="color: #22a65e; font-size: 0.9rem;">↑ 12% from yesterday</div>
+                    <div class="trend-positive">↑ 12% from yesterday</div>
                     <div class="earnings-sparkline">
                         <div class="sparkline-head">
                             <span>Last 7 days</span>
@@ -1293,12 +1481,12 @@
                 <div class="stat-card">
                     <h3>Tasks completed</h3>
                     <div class="value">147</div>
-                    <div style="color: #5f748b;">lifetime</div>
+                    <div class="subtle">lifetime</div>
                 </div>
                 <div class="stat-card">
                     <h3>Acceptance rate</h3>
                     <div class="value">98%</div>
-                    <div style="color: #5f748b;">last 30 days</div>
+                    <div class="subtle">last 30 days</div>
                 </div>
             </div>
 
@@ -1708,6 +1896,25 @@
         </p>
     </footer>
     <div id="appToast" class="toast" role="status" aria-live="polite"></div>
+    <button id="supportFab" class="support-fab" type="button" aria-label="Open support chat">
+        💬 Support
+        <span id="supportPulse" class="support-pulse"></span>
+    </button>
+    <section id="supportChat" class="support-chat" aria-label="Dash Support">
+        <div class="support-chat-header">
+            <span>Dash Support</span>
+            <button id="closeSupportChat" type="button" style="background:none;border:none;color:#fff;cursor:pointer;">✕</button>
+        </div>
+        <div id="supportChatBody" class="support-chat-body">
+            <div class="support-actions">
+                <button type="button" data-chat-action="Where is my runner?">Where is my runner?</button>
+                <button type="button" data-chat-action="Report an issue">Report an issue</button>
+                <button type="button" data-chat-action="Payment/refund help">Payment/refund help</button>
+                <button type="button" data-chat-action="Account verification help">Verification help</button>
+            </div>
+            <div class="support-msg bot">Hi, I'm Dash Support. How can I help?</div>
+        </div>
+    </section>
 
     <script>
         const STORAGE_KEYS = {
@@ -2131,6 +2338,55 @@
             });
         }
 
+        function initializeSupportChat() {
+            const fab = document.getElementById('supportFab');
+            const chat = document.getElementById('supportChat');
+            const closeBtn = document.getElementById('closeSupportChat');
+            const pulse = document.getElementById('supportPulse');
+            const chatBody = document.getElementById('supportChatBody');
+            if (!fab || !chat || !closeBtn || !chatBody) {
+                return;
+            }
+
+            function appendSupportMessage(text, role) {
+                const msg = document.createElement('div');
+                msg.className = `support-msg ${role}`;
+                msg.textContent = text;
+                chatBody.appendChild(msg);
+                chatBody.scrollTop = chatBody.scrollHeight;
+            }
+
+            function toggleSupportChat(open) {
+                chat.classList.toggle('open', open);
+                if (pulse) {
+                    pulse.style.display = open ? 'none' : 'block';
+                }
+            }
+
+            fab.addEventListener('click', () => {
+                const willOpen = !chat.classList.contains('open');
+                toggleSupportChat(willOpen);
+            });
+
+            closeBtn.addEventListener('click', () => toggleSupportChat(false));
+
+            const quickReplies = {
+                'Where is my runner?': 'Open Requester Dashboard and check Active Request status + ETA. If delayed over 10 minutes, tap Report an issue.',
+                'Report an issue': 'Please share request ID and a quick summary. Safety-related issues are prioritized immediately.',
+                'Payment/refund help': 'Share request ID and a screenshot of the charge. Refund checks are usually completed within 24 hours.',
+                'Account verification help': 'Use a valid .edu email and a clear student ID photo. If still blocked, support can review manually.'
+            };
+
+            chat.querySelectorAll('[data-chat-action]').forEach((btn) => {
+                btn.addEventListener('click', () => {
+                    const action = btn.getAttribute('data-chat-action');
+                    if (!action) return;
+                    appendSupportMessage(action, 'user');
+                    appendSupportMessage(quickReplies[action] || 'Thanks. Share your request ID and details so support can help quickly.', 'bot');
+                });
+            });
+        }
+
         function applyTheme(theme) {
             const darkModeEnabled = theme === 'dark';
             document.body.classList.toggle('dark-mode', darkModeEnabled);
@@ -2165,6 +2421,7 @@
         initializeQuickRequest();
         initializeSignup();
         initializeLogin();
+        initializeSupportChat();
         updateNavAuthState();
     </script>
 </body>
