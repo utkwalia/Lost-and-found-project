@@ -1,5 +1,5 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import AppLayout from './layout/AppLayout'
 import Features from './pages/Features'
 import Home from './pages/Home'
@@ -20,18 +20,17 @@ const starterRequests = [
 ]
 
 function App() {
-  const [requests, setRequests] = useState([])
-
-  useEffect(() => {
+  const [requests, setRequests] = useState(() => {
     const saved = localStorage.getItem(REQUESTS_KEY)
     if (saved) {
       try {
-        setRequests(JSON.parse(saved))
+        return JSON.parse(saved)
       } catch {
-        setRequests([])
+        return []
       }
     }
-  }, [])
+    return []
+  })
 
   const mergedRunnerRequests = useMemo(() => [...requests, ...starterRequests], [requests])
 

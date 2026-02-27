@@ -33,9 +33,9 @@ export default function SupportChatbot() {
     const value = text.trim()
     if (!value) return
 
-    const user = { id: `${Date.now()}-u`, role: 'user', text: value }
+    const user = { id: crypto.randomUUID(), role: 'user', text: value }
     const bot = {
-      id: `${Date.now()}-b`,
+      id: crypto.randomUUID(),
       role: 'bot',
       text: BOT_RESPONSES[value] || 'Got it. Please share request ID and details so we can help quickly.',
     }
