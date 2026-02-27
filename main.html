@@ -1,0 +1,1215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dorm-Dash · Campus Task Marketplace</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background: #f5f7fa;
+            color: #1a1e24;
+            line-height: 1.5;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: white;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #eaeef2;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
+            font-size: 1.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .logo-icon {
+            background: #1e3c5c;
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-links a:not(.btn) {
+            text-decoration: none;
+            color: #2d3a4a;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+            cursor: pointer;
+        }
+
+        .nav-links a:not(.btn):hover {
+            color: #1e3c5c;
+        }
+        
+        a.btn-primary,
+        a.btn-primary:visited,
+        a.btn-primary:hover,
+        a.btn-primary:focus {
+        color: #ffffff;
+        -webkit-text-fill-color: #ffffff;
+        opacity: 1;
+        }
+
+
+        .btn {
+            padding: 0.6rem 1.4rem;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1.5px solid #1e3c5c;
+            color: #1e3c5c;
+        }
+
+        .btn-outline:hover {
+            background: #f0f4f9;
+        }
+
+        .btn-primary {
+            background: #1e3c5c;
+            color: white;
+            border: 1.5px solid #1e3c5c;
+        }
+
+        .btn-primary:hover {
+            background: #143049;
+            border-color: #143049;
+        }
+
+        /* Keep button-link text visible in all anchor states */
+        a.btn-primary,
+        a.btn-primary:visited,
+        a.btn-primary:hover,
+        a.btn-primary:focus {
+            color: #ffffff;
+            -webkit-text-fill-color: #ffffff;
+            opacity: 1;
+        }
+
+        .btn-accent {
+            background: #f0b34b;
+            color: #1a1e24;
+            border: 1.5px solid #f0b34b;
+        }
+
+        .btn-accent:hover {
+            background: #e09f30;
+        }
+
+        /* Page Content */
+        .page {
+            display: none;
+            min-height: calc(100vh - 140px);
+            padding: 2rem 5% 4rem;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Hero / Home */
+        .hero {
+            display: flex;
+            align-items: center;
+            gap: 4rem;
+            max-width: 1300px;
+            margin: 2rem auto;
+        }
+
+        .hero-content {
+            flex: 1;
+        }
+
+        .hero-badge {
+            background: #e8edf2;
+            color: #1e3c5c;
+            font-weight: 600;
+            font-size: 0.8rem;
+            padding: 0.4rem 1rem;
+            border-radius: 40px;
+            display: inline-block;
+            margin-bottom: 1.5rem;
+            letter-spacing: 0.3px;
+        }
+
+        .hero-content h1 {
+            font-size: 3.2rem;
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+            color: #0b1a2a;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-content h1 span {
+            color: #1e3c5c;
+            background: #e2eaf1;
+            padding: 0 8px;
+            border-radius: 12px;
+        }
+
+        .hero-desc {
+            font-size: 1.2rem;
+            color: #3f4d5e;
+            max-width: 500px;
+            margin-bottom: 2rem;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1e3c5c;
+        }
+
+        .stat-label {
+            color: #5b6f84;
+            font-size: 0.9rem;
+        }
+
+        .hero-image {
+            flex: 1;
+            background: #d9e2ec;
+            border-radius: 40px;
+            height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1e3c5c;
+            font-weight: 500;
+            background-image: radial-gradient(circle at 30% 40%, #c0d0df 0%, #d9e2ec 70%);
+            box-shadow: 0 20px 35px -10px rgba(0, 30, 50, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Enhanced Map Visualization */
+        .map-preview {
+            width: 90%;
+            height: 90%;
+            background: #eef3f8;
+            border-radius: 28px;
+            padding: 1.5rem;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .map-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 2px;
+            height: 100%;
+        }
+
+        .map-building {
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 6px;
+            padding: 4px;
+            font-size: 0.6rem;
+            text-align: center;
+            border: 1px solid #b3c6d9;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .building-west {
+            background: #c5d5e8;
+        }
+
+        .building-east {
+            background: #d2e0f0;
+        }
+
+        .building-north {
+            background: #cce0f5;
+        }
+
+        .building-library {
+            background: #b8d1e8;
+        }
+
+        .building-gym {
+            background: #aec9e3;
+        }
+
+        .runner-dot {
+            width: 24px;
+            height: 24px;
+            background: #f0b34b;
+            border: 3px solid white;
+            border-radius: 30px;
+            position: absolute;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            animation: pulse 1.5s infinite;
+        }
+
+        .runner-path {
+            position: absolute;
+            border: 2px dashed #1e3c5c;
+            opacity: 0.3;
+            width: 120px;
+            height: 2px;
+            transform: rotate(45deg);
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* Dashboard Layout */
+        .dashboard-container {
+            max-width: 1400px;
+            margin: 2rem auto;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background: white;
+            padding: 0.5rem 1.5rem 0.5rem 0.5rem;
+            border-radius: 60px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .user-avatar {
+            width: 44px;
+            height: 44px;
+            background: #1e3c5c;
+            border-radius: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        .trust-badge {
+            background: #f0b34b;
+            padding: 0.2rem 0.8rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .dashboard-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 0.5rem;
+        }
+
+        .tab {
+            padding: 0.5rem 1.5rem;
+            cursor: pointer;
+            font-weight: 600;
+            color: #4a5e73;
+            border-radius: 30px;
+        }
+
+        .tab.active {
+            background: #1e3c5c;
+            color: white;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+
+        /* Runner Dashboard */
+        .runner-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 24px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+        }
+
+        .stat-card h3 {
+            font-size: 0.9rem;
+            color: #5f748b;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card .value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1e3c5c;
+        }
+
+        .task-list {
+            background: white;
+            border-radius: 28px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .task-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid #ecf1f7;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .task-item:hover {
+            background: #f8fafd;
+            border-radius: 16px;
+        }
+
+        .task-item:last-child {
+            border-bottom: none;
+        }
+
+        .task-distance {
+            color: #1e3c5c;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .task-tip {
+            background: #e6f0f9;
+            padding: 0.3rem 0.8rem;
+            border-radius: 40px;
+            font-weight: 600;
+            color: #1e3c5c;
+        }
+
+        .rank-progress {
+            background: white;
+            border-radius: 24px;
+            padding: 1.5rem;
+        }
+
+        .progress-bar {
+            height: 12px;
+            background: #e2eaf1;
+            border-radius: 20px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #f0b34b;
+            width: 68%;
+            border-radius: 20px;
+        }
+
+        .rank-badge {
+            display: inline-block;
+            padding: 0.3rem 1rem;
+            background: #1e3c5c;
+            color: white;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        /* Requester Dashboard */
+        .active-request {
+            background: #1e3c5c;
+            color: white;
+            border-radius: 28px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .tracking-info {
+            display: flex;
+            gap: 2rem;
+            margin: 1.5rem 0;
+        }
+
+        .tracking-step {
+            flex: 1;
+            text-align: center;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+        }
+
+        .mini-map {
+            background: #2d4b6e;
+            border-radius: 20px;
+            padding: 1rem;
+            height: 120px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Features Grid */
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin: 3rem 0 1rem;
+            color: #0b1a2a;
+        }
+
+        .section-subhead {
+            text-align: center;
+            color: #4d6278;
+            max-width: 600px;
+            margin: 0 auto 3rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem 1.5rem;
+            border-radius: 28px;
+            box-shadow: 0 10px 25px -8px rgba(0, 0, 0, 0.06);
+            border: 1px solid #edf2f7;
+            transition: transform 0.15s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            background: #edf4fa;
+            width: 56px;
+            height: 56px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            color: #1e3c5c;
+        }
+
+        /* Auth Pages */
+        .auth-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 70vh;
+        }
+
+        .auth-card {
+            background: white;
+            border-radius: 40px;
+            padding: 3rem 2.5rem;
+            width: 100%;
+            max-width: 460px;
+            box-shadow: 0 25px 45px -15px rgba(18, 52, 77, 0.15);
+            border: 1px solid #eef3f8;
+        }
+
+        .input-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .input-group label {
+            display: block;
+            font-weight: 500;
+            font-size: 0.9rem;
+            margin-bottom: 0.3rem;
+            color: #1e2f40;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 1rem;
+            border: 1.5px solid #dde5ed;
+            border-radius: 16px;
+            font-size: 1rem;
+            transition: 0.2s;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #1e3c5c;
+        }
+
+        /* Footer */
+        .footer {
+            background: white;
+            border-top: 1px solid #e6ecf2;
+            padding: 2rem 5%;
+            text-align: center;
+            color: #596f84;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 900px) {
+            .hero {
+                flex-direction: column;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="logo">
+            <span class="logo-icon">D</span>
+            Dorm-Dash
+        </div>
+        <div class="nav-links">
+            <a onclick="showPage('home')">Home</a>
+            <a onclick="showPage('features')">Features</a>
+            <a onclick="showPage('howitworks')">How it works</a>
+            <a onclick="showPage('safety')">Safety</a>
+            <a onclick="showPage('runner-dashboard')">Runner Demo</a>
+            <a onclick="showPage('requester-dashboard')">Requester Demo</a>
+            <a onclick="showPage('login')" class="btn-outline btn">Log in</a>
+            <a onclick="showPage('signup')" class="btn-primary btn">Sign up</a>
+        </div>
+    </nav>
+
+    <!-- HOME PAGE -->
+    <div id="home" class="page active">
+        <div class="hero">
+            <div class="hero-content">
+                <span class="hero-badge">🔥 2,847 tasks completed this week</span>
+                <h1>Stuck in your room? <span>Dash it.</span></h1>
+                <p class="hero-desc">Get snacks, supplies, or favors from peers who are already on their way.
+                    Campus-only trust network.</p>
+                <div style="display: flex; gap: 1rem;">
+                    <a onclick="showPage('signup')" class="btn btn-primary"
+                        style="padding: 0.9rem 2rem; cursor: pointer;">Get started</a>
+                    <a onclick="showPage('howitworks')" class="btn btn-outline"
+                        style="padding: 0.9rem 2rem; cursor: pointer;">See how it works</a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat-item"><span class="stat-number">3 min</span><span class="stat-label">avg.
+                            delivery</span></div>
+                    <div class="stat-item"><span class="stat-number">98%</span><span
+                            class="stat-label">satisfaction</span></div>
+                    <div class="stat-item"><span class="stat-number">500+</span><span class="stat-label">active
+                            runners</span></div>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="map-preview">
+                    <div style="position: relative; height: 100%;">
+                        <!-- Campus Grid -->
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; height: 70%;">
+                            <div style="background: #c5d5e8; border-radius: 12px; padding: 8px;">
+                                <div style="font-weight: 600;">West</div>
+                                <div style="font-size: 0.7rem;">5 active</div>
+                            </div>
+                            <div style="background: #b8d1e8; border-radius: 12px; padding: 8px;">
+                                <div style="font-weight: 600;">Library</div>
+                                <div style="font-size: 0.7rem;">3 active</div>
+                                <div
+                                    style="background: #f0b34b; width: 8px; height: 8px; border-radius: 8px; margin-top: 4px;">
+                                </div>
+                            </div>
+                            <div style="background: #c5d5e8; border-radius: 12px; padding: 8px;">
+                                <div style="font-weight: 600;">North</div>
+                                <div style="font-size: 0.7rem;">4 active</div>
+                            </div>
+                            <div style="background: #aec9e3; border-radius: 12px; padding: 8px;">
+                                <div style="font-weight: 600;">Gym</div>
+                                <div style="font-size: 0.7rem;">2 active</div>
+                            </div>
+                            <div style="background: #d2e0f0; border-radius: 12px; padding: 8px;">
+                                <div style="font-weight: 600;">East</div>
+                                <div style="font-size: 0.7rem;">6 active</div>
+                                <div
+                                    style="background: #f0b34b; width: 8px; height: 8px; border-radius: 8px; margin-top: 4px;">
+                                </div>
+                            </div>
+                            <div style="background: #c5d5e8; border-radius: 12px; padding: 8px;">
+                                <div style="font-weight: 600;">South</div>
+                                <div style="font-size: 0.7rem;">3 active</div>
+                            </div>
+                        </div>
+
+                        <!-- Live Tasks -->
+                        <div style="margin-top: 16px; background: white; border-radius: 16px; padding: 12px;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                                <span><span class="map-dot"></span> Tuck Shop → Water + chips</span>
+                                <span style="font-weight: 600;">$12</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between;">
+                                <span><span class="map-dot"></span> Library → Textbook pickup</span>
+                                <span style="font-weight: 600;">$8</span>
+                            </div>
+                            <div style="display: flex; margin-top: 8px; color: #1e3c5c; font-size: 0.8rem;">
+                                <span>🚶 8 runners nearby</span>
+                            </div>
+                        </div>
+
+                        <!-- Animated Runner -->
+                        <div class="runner-dot" style="top: 30%; left: 45%;"></div>
+                        <div class="runner-dot" style="top: 55%; left: 65%; animation-delay: 0.5s;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-title">How students use Dorm-Dash</h2>
+        <div class="features-grid" style="margin-top: 2rem;">
+            <div class="feature-card">
+                <div class="feature-icon">📚</div>
+                <h3>Study fuel</h3>
+                <p>"Pulled an all-nighter and needed coffee. Runner brought it in 8 mins."</p>
+                <div style="margin-top: 1rem; color: #1e3c5c; font-weight: 500;">— Alex, CS major</div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🏃</div>
+                <h3>Earn on your route</h3>
+                <p>"I walk across campus anyway — made $240 this month on my way to class."</p>
+                <div style="margin-top: 1rem; color: #1e3c5c; font-weight: 500;">— Maya, Nursing</div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🛡️</div>
+                <h3>Trust scores</h3>
+                <p>Reliability ranking. Only verified students. Campus security integrated.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- RUNNER DASHBOARD -->
+    <div id="runner-dashboard" class="page">
+        <div class="dashboard-container">
+            <div class="dashboard-header">
+                <div>
+                    <h1 style="font-size: 2rem;">Runner Dashboard</h1>
+                    <p style="color: #4f6f8f;">Available tasks near you</p>
+                </div>
+                <div class="user-profile">
+                    <div class="user-avatar">MP</div>
+                    <div>
+                        <div style="font-weight: 600;">Maya Patel</div>
+                        <div style="display: flex; gap: 8px; align-items: center;">
+                            <span class="trust-badge">⭐ 94 Trust Score</span>
+                            <span>🎓 Nursing '24</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="runner-stats">
+                <div class="stat-card">
+                    <h3>Today's earnings</h3>
+                    <div class="value">$48.50</div>
+                    <div style="color: #22a65e; font-size: 0.9rem;">↑ 12% from yesterday</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Tasks completed</h3>
+                    <div class="value">147</div>
+                    <div style="color: #5f748b;">lifetime</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Acceptance rate</h3>
+                    <div class="value">98%</div>
+                    <div style="color: #5f748b;">last 30 days</div>
+                </div>
+            </div>
+
+            <div class="dashboard-grid">
+                <div>
+                    <div class="task-list">
+                        <h3 style="margin-bottom: 1.5rem;">🔥 Hot tasks near you</h3>
+
+                        <div class="task-item">
+                            <div>
+                                <div style="font-weight: 600; margin-bottom: 4px;">Tuck Shop run 🧃</div>
+                                <div style="color: #5f748b; font-size: 0.9rem;">2 items · West Hall 5th floor</div>
+                                <div class="task-distance">0.3 mi · 8 min walk</div>
+                            </div>
+                            <div>
+                                <span class="task-tip">$12 tip</span>
+                            </div>
+                        </div>
+
+                        <div class="task-item">
+                            <div>
+                                <div style="font-weight: 600; margin-bottom: 4px;">Package pickup 📦</div>
+                                <div style="color: #5f748b; font-size: 0.9rem;">Mailroom → North Hall</div>
+                                <div class="task-distance">0.5 mi · 12 min walk</div>
+                            </div>
+                            <div>
+                                <span class="task-tip">$8 tip</span>
+                            </div>
+                        </div>
+
+                        <div class="task-item">
+                            <div>
+                                <div style="font-weight: 600; margin-bottom: 4px;">Coffee + bagel ☕</div>
+                                <div style="color: #5f748b; font-size: 0.9rem;">Starbucks → Library</div>
+                                <div class="task-distance">0.2 mi · 5 min walk</div>
+                            </div>
+                            <div>
+                                <span class="task-tip">$10 tip</span>
+                            </div>
+                        </div>
+
+                        <div class="task-item">
+                            <div>
+                                <div style="font-weight: 600; margin-bottom: 4px;">Print job pickup 🖨️</div>
+                                <div style="color: #5f748b; font-size: 0.9rem;">Library → East Hall</div>
+                                <div class="task-distance">0.4 mi · 10 min walk</div>
+                            </div>
+                            <div>
+                                <span class="task-tip">$6 tip</span>
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 1rem; text-align: center;">
+                            <a class="btn btn-outline">View all 12 tasks →</a>
+                        </div>
+                    </div>
+
+                    <div style="background: white; border-radius: 28px; padding: 1.5rem;">
+                        <h3 style="margin-bottom: 1rem;">Today's route</h3>
+                        <div
+                            style="background: #eef3f8; border-radius: 20px; padding: 1rem; height: 150px; position: relative;">
+                            <div
+                                style="display: flex; gap: 8px; position: absolute; bottom: 16px; left: 16px; background: white; padding: 8px 16px; border-radius: 40px;">
+                                <span>📍 Library →</span>
+                                <span>🏪 Tuck Shop →</span>
+                                <span>🏢 West Hall</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="rank-progress">
+                        <div
+                            style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                            <h3>Runner Rank</h3>
+                            <span class="rank-badge">Platinum</span>
+                        </div>
+                        <div>Next: Diamond (96+ Trust Score)</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill"></div>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-top: 0.5rem;">
+                            <span>Current: 94</span>
+                            <span>Goal: 96</span>
+                        </div>
+
+                        <div style="margin-top: 2rem;">
+                            <h4 style="margin-bottom: 1rem;">Rank perks</h4>
+                            <ul style="list-style: none;">
+                                <li style="margin-bottom: 0.8rem;">✅ Priority task notifications</li>
+                                <li style="margin-bottom: 0.8rem;">✅ See higher-tip tasks first</li>
+                                <li style="margin-bottom: 0.8rem;">✅ "Top Runner" badge</li>
+                                <li>✅ 0.9x service fee</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div style="background: white; border-radius: 24px; padding: 1.5rem; margin-top: 2rem;">
+                        <h4>Recent reviews</h4>
+                        <div style="margin-top: 1rem;">
+                            <div style="margin-bottom: 1rem;">
+                                <span style="color: #f0b34b;">★★★★★</span>
+                                <p style="font-size: 0.9rem;">"Super fast, brought it right to my door!"</p>
+                                <span style="color: #5f748b; font-size: 0.8rem;">— Alex, 10 min ago</span>
+                            </div>
+                            <div>
+                                <span style="color: #f0b34b;">★★★★★</span>
+                                <p style="font-size: 0.9rem;">"Friendly and communicated the whole way"</p>
+                                <span style="color: #5f748b; font-size: 0.8rem;">— Sarah, 2 hours ago</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- REQUESTER DASHBOARD -->
+    <div id="requester-dashboard" class="page">
+        <div class="dashboard-container">
+            <div class="dashboard-header">
+                <div>
+                    <h1 style="font-size: 2rem;">Requester Dashboard</h1>
+                    <p style="color: #4f6f8f;">Track your active requests</p>
+                </div>
+                <div class="user-profile">
+                    <div class="user-avatar">AC</div>
+                    <div>
+                        <div style="font-weight: 600;">Alex Chen</div>
+                        <div style="display: flex; gap: 8px;">
+                            <span class="trust-badge">⭐ 82 Trust Score</span>
+                            <span>🎓 CS '26</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Active Request Tracking -->
+            <div class="active-request">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                    <h2 style="color: white;">Active Request #2341</h2>
+                    <span
+                        style="background: #f0b34b; color: #1a1e24; padding: 0.3rem 1rem; border-radius: 40px; font-weight: 600;">IN
+                        PROGRESS</span>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                    <div>
+                        <h3 style="color: rgba(255,255,255,0.8); margin-bottom: 1rem;">Items</h3>
+                        <ul style="color: white; list-style: none;">
+                            <li style="margin-bottom: 0.5rem;">• Large water bottle (2)</li>
+                            <li style="margin-bottom: 0.5rem;">• Salt & vinegar chips (1)</li>
+                            <li style="margin-bottom: 0.5rem;">• Chocolate bar (1)</li>
+                        </ul>
+                        <p style="color: rgba(255,255,255,0.8); margin-top: 1rem;">Tuck Shop · $14.50 + $10 tip</p>
+                    </div>
+
+                    <div>
+                        <h3 style="color: rgba(255,255,255,0.8); margin-bottom: 1rem;">Runner: Maya P.</h3>
+                        <div
+                            style="display: flex; gap: 1rem; align-items: center; background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 16px;">
+                            <div
+                                style="width: 48px; height: 48px; background: #f0b34b; border-radius: 48px; display: flex; align-items: center; justify-content: center; font-weight: 600;">
+                                MP</div>
+                            <div>
+                                <div style="color: white; font-weight: 600;">⭐ 94 Trust Score</div>
+                                <div style="color: rgba(255,255,255,0.7);">147 deliveries</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tracking-info">
+                    <div class="tracking-step">
+                        <div>1. Order received</div>
+                        <div style="font-size: 0.8rem; opacity: 0.8;">2 min ago</div>
+                    </div>
+                    <div class="tracking-step">
+                        <div>2. Picked up</div>
+                        <div style="font-size: 0.8rem; opacity: 0.8;">1 min ago</div>
+                    </div>
+                    <div class="tracking-step" style="background: #f0b34b; color: #1a1e24;">
+                        <div>3. En route</div>
+                        <div style="font-size: 0.8rem;">ETA: 4 min</div>
+                    </div>
+                </div>
+
+                <div class="mini-map">
+                    <div style="color: white; position: absolute; bottom: 16px; left: 16px;">
+                        🚶 Runner is at Student Union → heading to West Hall
+                    </div>
+                    <div class="runner-dot" style="top: 40%; left: 60%;"></div>
+                </div>
+            </div>
+
+            <div class="dashboard-grid">
+                <div>
+                    <div class="task-list">
+                        <h3 style="margin-bottom: 1.5rem;">Recent requests</h3>
+
+                        <div class="task-item">
+                            <div>
+                                <div style="font-weight: 600;">Tuck Shop run</div>
+                                <div style="color: #5f748b;">2 items · delivered to room 512</div>
+                            </div>
+                            <div>
+                                <span style="color: #22a65e;">Completed</span>
+                                <span style="margin-left: 1rem;" class="task-tip">$10</span>
+                            </div>
+                        </div>
+
+                        <div class="task-item">
+                            <div>
+                                <div style="font-weight: 600;">Package from mailroom</div>
+                                <div style="color: #5f748b;">Amazon box · delivered yesterday</div>
+                            </div>
+                            <div>
+                                <span style="color: #22a65e;">Completed</span>
+                                <span style="margin-left: 1rem;" class="task-tip">$7</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div style="background: white; border-radius: 24px; padding: 1.5rem;">
+                        <h4 style="margin-bottom: 1rem;">Quick request</h4>
+                        <div class="input-group">
+                            <label>What do you need?</label>
+                            <input type="text" placeholder="e.g. Water, chips, coffee...">
+                        </div>
+                        <div class="input-group">
+                            <label>From where?</label>
+                            <input type="text" placeholder="Tuck Shop / Library / etc.">
+                        </div>
+                        <div class="input-group">
+                            <label>Tip amount ($)</label>
+                            <input type="number" placeholder="8.00">
+                        </div>
+                        <button class="btn btn-primary" style="width: 100%;">Post request</button>
+                    </div>
+
+                    <div style="background: #e6f0f9; border-radius: 24px; padding: 1.5rem; margin-top: 2rem;">
+                        <h4 style="margin-bottom: 0.5rem;">💰 Tip suggestions</h4>
+                        <p style="color: #2d3a4a; font-size: 0.9rem;">Higher tips get picked up faster</p>
+                        <div style="display: flex; gap: 0.5rem; margin-top: 1rem;">
+                            <span style="background: white; padding: 0.5rem 1rem; border-radius: 40px;">$5</span>
+                            <span style="background: white; padding: 0.5rem 1rem; border-radius: 40px;">$8</span>
+                            <span
+                                style="background: #1e3c5c; color: white; padding: 0.5rem 1rem; border-radius: 40px;">$10</span>
+                            <span style="background: white; padding: 0.5rem 1rem; border-radius: 40px;">$15</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- LOGIN PAGE -->
+    <div id="login" class="page">
+        <div class="auth-container">
+            <div class="auth-card">
+                <div class="auth-header">
+                    <h2>Welcome back</h2>
+                    <p>Log in with your .edu account</p>
+                </div>
+                <div class="input-group">
+                    <label>Email</label>
+                    <input type="email" placeholder="you@university.edu">
+                </div>
+                <div class="input-group">
+                    <label>Password</label>
+                    <input type="password" placeholder="••••••••">
+                </div>
+                <button class="btn btn-primary" style="width:100%; padding:1rem;">Log in</button>
+                <div class="auth-footer">
+                    Don't have an account? <a onclick="showPage('signup')" style="cursor: pointer;">Sign up</a>
+                </div>
+                <div class="edu-badge">🔒 Only current students</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SIGNUP PAGE -->
+    <div id="signup" class="page">
+        <div class="auth-container">
+            <div class="auth-card">
+                <div class="auth-header">
+                    <h2>Join Dorm-Dash</h2>
+                    <p>Start dashing in minutes</p>
+                </div>
+                <div class="input-group">
+                    <label>Full name</label>
+                    <input type="text" placeholder="Alex Chen">
+                </div>
+                <div class="input-group">
+                    <label>University email</label>
+                    <input type="email" placeholder="alex@university.edu">
+                </div>
+                <div class="input-group">
+                    <label>Dorm / hall</label>
+                    <input type="text" placeholder="e.g. West Hall">
+                </div>
+                <div class="input-group">
+                    <label>Password</label>
+                    <input type="password" placeholder="Create a password">
+                </div>
+                <button class="btn btn-primary" style="width:100%; padding:1rem;">Create account</button>
+                <div class="auth-footer">
+                    Already have an account? <a onclick="showPage('login')" style="cursor: pointer;">Log in</a>
+                </div>
+                <div class="edu-badge">🎓 ID verification required</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FEATURES PAGE (simplified for space) -->
+    <div id="features" class="page">
+        <h1 class="section-title">Built for campus life</h1>
+        <p class="section-subhead">Everything you need for safe, fast, friendly task swapping.</p>
+        <div class="features-grid" style="max-width: 1100px;">
+            <div class="feature-card">
+                <div class="feature-icon">🗺️</div>
+                <h3>Live runner map</h3>
+                <p>See who's moving near you. Tasks get picked up faster when someone's already on their way.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⭐</div>
+                <h3>Runner rank (trust score)</h3>
+                <p>Bronze → Diamond. The more tasks you complete, the more visible and trusted you become.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🪪</div>
+                <h3>Student ID verification</h3>
+                <p>Every single user verified with .edu email + ID photo. No outsiders.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- HOW IT WORKS PAGE -->
+    <div id="howitworks" class="page">
+        <h1 class="section-title">Three steps to your next snack</h1>
+        <div style="display: flex; justify-content: center; gap: 2rem; margin: 3rem 0; flex-wrap: wrap;">
+            <div style="background: white; border-radius: 32px; padding: 2rem; max-width: 260px; text-align: center;">
+                <div
+                    style="background: #1e3c5c; color: white; width: 48px; height: 48px; border-radius: 48px; display: flex; align-items: center; justify-content: center; font-weight: 700; margin: 0 auto 1rem;">
+                    1</div>
+                <h3>Post a task</h3>
+                <p>"Need water from Tuck Shop, room 512, $8 tip."</p>
+            </div>
+            <div style="background: white; border-radius: 32px; padding: 2rem; max-width: 260px; text-align: center;">
+                <div
+                    style="background: #1e3c5c; color: white; width: 48px; height: 48px; border-radius: 48px; display: flex; align-items: center; justify-content: center; font-weight: 700; margin: 0 auto 1rem;">
+                    2</div>
+                <h3>Runner accepts</h3>
+                <p>Nearby student grabs it. See their ETA and live location.</p>
+            </div>
+            <div style="background: white; border-radius: 32px; padding: 2rem; max-width: 260px; text-align: center;">
+                <div
+                    style="background: #1e3c5c; color: white; width: 48px; height: 48px; border-radius: 48px; display: flex; align-items: center; justify-content: center; font-weight: 700; margin: 0 auto 1rem;">
+                    3</div>
+                <h3>Meet at door</h3>
+                <p>Runner drops off, you rate each other. Trust score updates.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- SAFETY PAGE -->
+    <div id="safety" class="page">
+        <h1 class="section-title">Safety first, always</h1>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; max-width: 1000px; margin: 3rem auto;">
+            <div style="background: white; border-radius: 28px; padding: 2rem;">
+                <span
+                    style="background: #1e3c5c; color:white; padding: 0.3rem 0.8rem; border-radius: 40px; font-size:0.8rem;">For
+                    requesters</span>
+                <ul style="margin-top: 1.5rem; list-style: none;">
+                    <li style="margin-bottom: 1rem;">✅ Room number hidden until runner picks up</li>
+                    <li style="margin-bottom: 1rem;">✅ Only verified students can accept</li>
+                    <li>✅ Report button if anything feels off</li>
+                </ul>
+            </div>
+            <div style="background: white; border-radius: 28px; padding: 2rem;">
+                <span
+                    style="background: #f0b34b; color:#1a1e24; padding: 0.3rem 0.8rem; border-radius: 40px; font-size:0.8rem;">For
+                    runners</span>
+                <ul style="margin-top: 1.5rem; list-style: none;">
+                    <li style="margin-bottom: 1rem;">✅ Full room # only after task start</li>
+                    <li style="margin-bottom: 1rem;">✅ Never enter a room — deliver at door</li>
+                    <li>✅ SOS button connected to campus security</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <p>© 2025 Dorm-Dash · Campus task marketplace · All users verified · 📍 Made for students, by students.</p>
+        <p style="margin-top: 0.5rem;">
+            <a onclick="showPage('home')" style="margin:0 0.5rem; color:#1e3c5c; cursor: pointer;">Home</a> ·
+            <a onclick="showPage('features')" style="margin:0 0.5rem; color:#1e3c5c; cursor: pointer;">Features</a> ·
+            <a onclick="showPage('runner-dashboard')" style="margin:0 0.5rem; color:#1e3c5c; cursor: pointer;">Runner
+                Demo</a> ·
+            <a onclick="showPage('requester-dashboard')"
+                style="margin:0 0.5rem; color:#1e3c5c; cursor: pointer;">Requester Demo</a>
+        </p>
+    </footer>
+
+    <script>
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            document.getElementById(pageId).classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+
+</html>
