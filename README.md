@@ -1,4 +1,4 @@
-# Dorm-Dash-er
+# Dorm-Dash
 
 Dorm-Dash is a campus task-marketplace app where students can post quick requests (snacks, pickups, print runs, etc.) and nearby student runners fulfill them.
 
@@ -13,7 +13,6 @@ This repository contains:
 - Vite 7
 - Tailwind CSS 4 (via `@tailwindcss/vite`)
 - React Router
-
 - Lucide React (icons)
 
 ## Features
