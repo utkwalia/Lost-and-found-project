@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { MessageCircle, Send, X } from 'lucide-react'
 
 const QUICK_ACTIONS = [
@@ -43,15 +44,16 @@ export default function SupportChatbot() {
     setDraft('')
   }
 
-  return (
+  const widget = (
     <>
       <button
         type="button"
         aria-label="Toggle support chat"
         onClick={() => setIsOpen((prev) => !prev)}
-        className="fixed bottom-6 right-6 z-50 h-14 w-14 rounded-full bg-[#1e3c5c] text-white shadow-xl ring-1 ring-[#2f5a83] transition hover:bg-[#17324d]"
+        className="fixed bottom-6 right-6 z-[9999] flex items-center gap-2 rounded-full bg-[#1e3c5c] px-4 py-3 text-white shadow-xl ring-1 ring-[#2f5a83] transition hover:bg-[#17324d] relative"
       >
-        <MessageCircle className="mx-auto h-6 w-6" />
+        <MessageCircle className="h-5 w-5" />
+        <span className="text-sm font-semibold">Support</span>
         {showPulse && (
           <>
             <span className="absolute -right-1 -top-1 h-3 w-3 rounded-full bg-sky-300" />
@@ -61,7 +63,7 @@ export default function SupportChatbot() {
       </button>
 
       {isOpen && (
-        <section className="fixed bottom-24 right-6 z-50 flex h-[500px] w-[350px] flex-col overflow-hidden rounded-2xl border border-[#dce6f0] bg-white shadow-2xl">
+        <section className="fixed bottom-24 right-6 z-[9999] flex h-[500px] w-[350px] flex-col overflow-hidden rounded-2xl border border-[#dce6f0] bg-white shadow-2xl">
           <header className="flex items-center justify-between bg-[#1e3c5c] px-4 py-3 text-white">
             <h3 className="font-semibold">Dash Support</h3>
             <button type="button" aria-label="Close chat" onClick={() => setIsOpen(false)}>
@@ -124,4 +126,6 @@ export default function SupportChatbot() {
       )}
     </>
   )
+
+  return createPortal(widget, document.body)
 }
