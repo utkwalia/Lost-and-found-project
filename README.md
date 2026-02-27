@@ -1,4 +1,4 @@
-# Dorm-Dash
+# Dorm-Dash-er
 
 Dorm-Dash is a campus task-marketplace app where students can post quick requests (snacks, pickups, print runs, etc.) and nearby student runners fulfill them.
 
