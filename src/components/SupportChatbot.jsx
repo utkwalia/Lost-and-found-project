@@ -50,8 +50,8 @@ export default function SupportChatbot() {
         type="button"
         aria-label="Toggle support chat"
         onClick={() => setIsOpen((prev) => !prev)}
-        className="fixed z-[9999] left-auto flex items-center gap-2 rounded-full bg-[#1e3c5c] px-4 py-3 text-white shadow-xl ring-1 ring-[#2f5a83] transition hover:bg-[#17324d] relative"
-        style={{ right: '24px', bottom: '24px' }}
+        className="z-[9999] left-auto flex items-center gap-2 rounded-full bg-[#1e3c5c] px-4 py-3 text-white shadow-xl ring-1 ring-[#2f5a83] transition hover:bg-[#17324d] relative"
+        style={{ position: 'fixed', right: '24px', bottom: '24px', left: 'auto' }}
       >
         <MessageCircle className="h-5 w-5" />
         <span className="text-sm font-semibold">Support</span>
@@ -65,8 +65,8 @@ export default function SupportChatbot() {
 
       {isOpen && (
         <section
-          className="fixed z-[9999] left-auto flex h-[500px] w-[350px] flex-col overflow-hidden rounded-2xl border border-[#dce6f0] bg-white shadow-2xl"
-          style={{ right: '24px', bottom: '96px' }}
+          className="z-[9999] left-auto flex h-[500px] w-[350px] flex-col overflow-hidden rounded-2xl border border-[#dce6f0] bg-white shadow-2xl"
+          style={{ position: 'fixed', right: '24px', bottom: '96px', left: 'auto' }}
         >
           <header className="flex items-center justify-between bg-[#1e3c5c] px-4 py-3 text-white">
             <h3 className="font-semibold">Dash Support</h3>
