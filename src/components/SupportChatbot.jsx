@@ -50,7 +50,8 @@ export default function SupportChatbot() {
         type="button"
         aria-label="Toggle support chat"
         onClick={() => setIsOpen((prev) => !prev)}
-        className="fixed bottom-6 right-6 z-[9999] flex items-center gap-2 rounded-full bg-[#1e3c5c] px-4 py-3 text-white shadow-xl ring-1 ring-[#2f5a83] transition hover:bg-[#17324d] relative"
+        className="fixed z-[9999] left-auto flex items-center gap-2 rounded-full bg-[#1e3c5c] px-4 py-3 text-white shadow-xl ring-1 ring-[#2f5a83] transition hover:bg-[#17324d] relative"
+        style={{ right: '24px', bottom: '24px' }}
       >
         <MessageCircle className="h-5 w-5" />
         <span className="text-sm font-semibold">Support</span>
@@ -63,7 +64,10 @@ export default function SupportChatbot() {
       </button>
 
       {isOpen && (
-        <section className="fixed bottom-24 right-6 z-[9999] flex h-[500px] w-[350px] flex-col overflow-hidden rounded-2xl border border-[#dce6f0] bg-white shadow-2xl">
+        <section
+          className="fixed z-[9999] left-auto flex h-[500px] w-[350px] flex-col overflow-hidden rounded-2xl border border-[#dce6f0] bg-white shadow-2xl"
+          style={{ right: '24px', bottom: '96px' }}
+        >
           <header className="flex items-center justify-between bg-[#1e3c5c] px-4 py-3 text-white">
             <h3 className="font-semibold">Dash Support</h3>
             <button type="button" aria-label="Close chat" onClick={() => setIsOpen(false)}>
