@@ -1,12 +1,55 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { supabase } from '../supabaseClient'
 
-export default function RequesterDashboard({ requests, onAddRequest }) {
+const mapRequestRow = (row) => ({
+  id: row.id,
+  item: row.item_description,
+  from: row.pickup_location,
+  tip: row.tip_amount,
+  createdAt: row.created_at,
+})
+
+export default function RequesterDashboard() {
+  const [requests, setRequests] = useState([])
+  const [loadingRequests, setLoadingRequests] = useState(true)
   const [item, setItem] = useState('')
   const [from, setFrom] = useState('')
   const [tip, setTip] = useState('10')
   const [photoPreview, setPhotoPreview] = useState('')
+  const [submitting, setSubmitting] = useState(false)
 
   const tipOptions = ['5', '8', '10', '15']
+
+  useEffect(() => {
+    let isMounted = true
+
+    const fetchRequests = async () => {
+      setLoadingRequests(true)
+      const { data, error } = await supabase
+        .from('requests')
+        .select('id, item_description, pickup_location, tip_amount, created_at')
+        .order('created_at', { ascending: false })
+        .limit(8)
+
+      if (!isMounted) return
+
+      if (error) {
+        console.error('Failed to fetch recent requests:', error)
+        setRequests([])
+        setLoadingRequests(false)
+        return
+      }
+
+      setRequests((data || []).map(mapRequestRow))
+      setLoadingRequests(false)
+    }
+
+    fetchRequests()
+
+    return () => {
+      isMounted = false
+    }
+  }, [])
 
   const onFileChange = (e) => {
     const file = e.target.files?.[0]
@@ -24,16 +67,37 @@ export default function RequesterDashboard({ requests, onAddRequest }) {
     reader.readAsDataURL(file)
   }
 
-  const submit = () => {
+  const submit = async () => {
     if (!item.trim() || !from.trim() || !tip) {
       alert('Please fill all required fields.')
       return
     }
-    onAddRequest({ item: item.trim(), from: from.trim(), tip: Number(tip), photo: photoPreview })
+    setSubmitting(true)
+    const { data, error } = await supabase
+      .from('requests')
+      .insert({
+        item_description: item.trim(),
+        pickup_location: from.trim(),
+        tip_amount: Number(tip),
+        status: 'open',
+      })
+      .select('id, item_description, pickup_location, tip_amount, created_at')
+
+    if (error) {
+      console.error('Failed to submit request:', error)
+      alert('Could not post your request. Please try again.')
+      setSubmitting(false)
+      return
+    }
+
+    if (data?.[0]) {
+      setRequests((prev) => [mapRequestRow(data[0]), ...prev])
+    }
     setItem('')
     setFrom('')
     setTip('10')
     setPhotoPreview('')
+    setSubmitting(false)
   }
 
   return (
@@ -52,7 +116,9 @@ export default function RequesterDashboard({ requests, onAddRequest }) {
       <div className="grid gap-6 md:grid-cols-[2fr_1fr]">
         <div className="rounded-[28px] bg-white p-6 shadow-sm dark:border dark:border-[#2a3b53] dark:bg-[#172233]">
           <h3 className="mb-4 text-3xl font-bold text-[#0b1a2a] dark:text-[#dbe7f5]">Recent requests</h3>
-          {requests.length === 0 ? (
+          {loadingRequests ? (
+            <p className="text-[#5f748b] dark:text-[#b8d1ef]">Loading recent requests...</p>
+          ) : requests.length === 0 ? (
             <p className="text-[#5f748b] dark:text-[#b8d1ef]">No recent requests yet.</p>
           ) : (
             requests.map((r) => (
@@ -86,7 +152,9 @@ export default function RequesterDashboard({ requests, onAddRequest }) {
             <input type="file" accept="image/*" onChange={onFileChange} className="mb-3 block w-full rounded-2xl border border-[#dde5ed] p-4 text-lg dark:border-[#344963] dark:bg-[#0f1621] dark:text-[#dbe7f5]" />
             {photoPreview && <img src={photoPreview} alt="preview" className="mb-4 h-36 w-full rounded-xl object-cover" />}
 
-            <button onClick={submit} className="w-full rounded-full bg-[#1e3c5c] py-3 text-2xl font-semibold text-white">Post request</button>
+            <button onClick={submit} disabled={submitting} className="w-full rounded-full bg-[#1e3c5c] py-3 text-2xl font-semibold text-white">
+              {submitting ? 'Posting...' : 'Post request'}
+            </button>
           </div>
 
           <div className="mt-6 rounded-[24px] bg-[#e6f0f9] p-6 dark:border dark:border-[#2a3b53] dark:bg-[#24364d]">

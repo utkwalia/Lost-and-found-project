@@ -1,4 +1,70 @@
-export default function RunnerDashboard({ requests }) {
+import { useEffect, useState } from 'react'
+import { supabase } from '../supabaseClient'
+
+const mapRequestRow = (row) => ({
+  id: row.id,
+  item: row.item_description,
+  from: row.pickup_location,
+  tip: row.tip_amount,
+  status: row.status,
+  createdAt: row.created_at,
+})
+
+export default function RunnerDashboard() {
+  const [requests, setRequests] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    let isMounted = true
+
+    const fetchRequests = async () => {
+      setLoading(true)
+      const { data, error } = await supabase
+        .from('requests')
+        .select('id, item_description, pickup_location, tip_amount, status, created_at')
+        .eq('status', 'open')
+        .order('created_at', { ascending: false })
+
+      if (!isMounted) return
+
+      if (error) {
+        console.error('Failed to fetch requests:', error)
+        setRequests([])
+        setLoading(false)
+        return
+      }
+
+      setRequests((data || []).map(mapRequestRow))
+      setLoading(false)
+    }
+
+    fetchRequests()
+
+    const channel = supabase
+      .channel('runner-open-requests')
+      .on(
+        'postgres_changes',
+        { event: 'INSERT', schema: 'public', table: 'requests' },
+        (payload) => {
+          const row = payload.new
+          if (row?.status !== 'open') return
+
+          setRequests((prev) => {
+            if (prev.some((request) => request.id === row.id)) {
+              return prev
+            }
+            return [mapRequestRow(row), ...prev]
+          })
+        }
+      )
+      .subscribe()
+
+    return () => {
+      isMounted = false
+      supabase.removeChannel(channel)
+    }
+  }, [])
+
   return (
     <section>
       <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
@@ -36,18 +102,21 @@ export default function RunnerDashboard({ requests }) {
       <div className="grid gap-6 md:grid-cols-[2fr_1fr]">
         <div className="rounded-[28px] bg-white p-6 shadow-sm dark:border dark:border-[#2a3b53] dark:bg-[#172233]">
           <h3 className="mb-4 text-3xl font-bold text-[#0b1a2a] dark:text-[#dbe7f5]">🔥 Hot tasks near you</h3>
-          {requests.slice(0, 8).map((task, index) => (
-            <div key={task.id || `${task.item}-${index}`} className="flex items-center justify-between border-b border-[#ecf1f7] py-4 dark:border-[#2a3b53]">
-              <div className="flex items-center gap-3">
-                {task.photo && <img src={task.photo} alt="item" className="h-12 w-12 rounded-lg object-cover" />}
-                <div>
-                  <p className="text-2xl font-semibold text-[#0b1a2a] dark:text-[#dbe7f5]">{task.item}</p>
-                  <p className="text-xl text-[#5f748b] dark:text-[#b8d1ef]">{task.from}</p>
+          {loading ? (
+            <p className="text-xl text-[#5f748b] dark:text-[#b8d1ef]">Loading campus tasks...</p>
+          ) : (
+            requests.slice(0, 8).map((task, index) => (
+              <div key={task.id || `${task.item}-${index}`} className="flex items-center justify-between border-b border-[#ecf1f7] py-4 dark:border-[#2a3b53]">
+                <div className="flex items-center gap-3">
+                  <div>
+                    <p className="text-2xl font-semibold text-[#0b1a2a] dark:text-[#dbe7f5]">{task.item}</p>
+                    <p className="text-xl text-[#5f748b] dark:text-[#b8d1ef]">{task.from}</p>
+                  </div>
                 </div>
+                <span className="rounded-full bg-[#e6f0f9] px-4 py-1 text-xl font-semibold text-[#1e3c5c]">${task.tip} tip</span>
               </div>
-              <span className="rounded-full bg-[#e6f0f9] px-4 py-1 text-xl font-semibold text-[#1e3c5c]">${task.tip} tip</span>
-            </div>
-          ))}
+            ))
+          )}
         </div>
 
         <div className="space-y-6">
