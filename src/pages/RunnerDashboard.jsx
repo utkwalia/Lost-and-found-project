@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../supabaseClient'
+import RouteMap from '../components/RouteMap'
 
 const mapRequestRow = (row) => ({
   id: row.id,
   item: row.item_description,
   from: row.pickup_location,
+  pickup_location: row.pickup_location,
+  dropoff_location: row.dropoff_location,
   tip: row.tip_amount,
   status: row.status,
   createdAt: row.created_at,
@@ -13,6 +16,7 @@ const mapRequestRow = (row) => ({
 export default function RunnerDashboard() {
   const [requests, setRequests] = useState([])
   const [loading, setLoading] = useState(true)
+  const [activeTask, setActiveTask] = useState(null)
 
   useEffect(() => {
     let isMounted = true
@@ -21,7 +25,7 @@ export default function RunnerDashboard() {
       setLoading(true)
       const { data, error } = await supabase
         .from('requests')
-        .select('id, item_description, pickup_location, tip_amount, status, created_at')
+        .select('id, item_description, pickup_location, dropoff_location, tip_amount, status, created_at')
         .eq('status', 'open')
         .order('created_at', { ascending: false })
 
@@ -100,23 +104,36 @@ export default function RunnerDashboard() {
       </div>
 
       <div className="grid gap-6 md:grid-cols-[2fr_1fr]">
-        <div className="rounded-[28px] bg-white p-6 shadow-sm dark:border dark:border-[#2a3b53] dark:bg-[#172233]">
-          <h3 className="mb-4 text-3xl font-bold text-[#0b1a2a] dark:text-[#dbe7f5]">🔥 Hot tasks near you</h3>
-          {loading ? (
-            <p className="text-xl text-[#5f748b] dark:text-[#b8d1ef]">Loading campus tasks...</p>
-          ) : (
-            requests.slice(0, 8).map((task, index) => (
-              <div key={task.id || `${task.item}-${index}`} className="flex items-center justify-between border-b border-[#ecf1f7] py-4 dark:border-[#2a3b53]">
-                <div className="flex items-center gap-3">
-                  <div>
-                    <p className="text-2xl font-semibold text-[#0b1a2a] dark:text-[#dbe7f5]">{task.item}</p>
-                    <p className="text-xl text-[#5f748b] dark:text-[#b8d1ef]">{task.from}</p>
+        <div>
+          <div className="rounded-[28px] bg-white p-6 shadow-sm dark:border dark:border-[#2a3b53] dark:bg-[#172233]">
+            <h3 className="mb-4 text-3xl font-bold text-[#0b1a2a] dark:text-[#dbe7f5]">🔥 Hot tasks near you</h3>
+            {loading ? (
+              <p className="text-xl text-[#5f748b] dark:text-[#b8d1ef]">Loading campus tasks...</p>
+            ) : (
+              requests.slice(0, 8).map((task, index) => (
+                <button
+                  type="button"
+                  key={task.id || `${task.item}-${index}`}
+                  onClick={() => setActiveTask(task)}
+                  className={`flex w-full items-center justify-between border-b border-[#ecf1f7] py-4 text-left transition dark:border-[#2a3b53] ${
+                    activeTask?.id === task.id ? 'bg-[#f3f7fb] dark:bg-[#1b2a40]' : ''
+                  }`}
+                >
+                  <div className="flex items-center gap-3">
+                    <div>
+                      <p className="text-2xl font-semibold text-[#0b1a2a] dark:text-[#dbe7f5]">{task.item}</p>
+                      <p className="text-xl text-[#5f748b] dark:text-[#b8d1ef]">{task.from}</p>
+                    </div>
                   </div>
-                </div>
-                <span className="rounded-full bg-[#e6f0f9] px-4 py-1 text-xl font-semibold text-[#1e3c5c]">${task.tip} tip</span>
-              </div>
-            ))
-          )}
+                  <span className="rounded-full bg-[#e6f0f9] px-4 py-1 text-xl font-semibold text-[#1e3c5c]">${task.tip} tip</span>
+                </button>
+              ))
+            )}
+          </div>
+
+          <div className="mt-6">
+            <RouteMap activeTask={activeTask} />
+          </div>
         </div>
 
         <div className="space-y-6">
